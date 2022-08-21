@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel rendered="#{employeeBean.list}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="md" styleClass="ui-fluid">
+                            <p:outputLabel value="#{employeeBean.panelTitleName}" styleClass="panel-title-css"/>
+                            <p:separator/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable value="#{employeeBean.collections}" var="emp" paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <f:facet name="header">
+                            <p:toolbar>
+                                <f:facet name="left">
+                                    <b:commandButton iconSize="lg" iconAwesome="fa-plus" look="primary" value="Add" action="#{employeeBean.addOrUpdate(null)}" update="@form"/>
+                                </f:facet>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="Created Date">
+                            <h:outputText value="#{emp.createdDate}">
+                                <f:convertDateTime pattern="yyyy MM dd"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="S-ID">
+                            <h:outputText value="#{emp.sid}"/>
+                        </p:column>
+                        <p:column headerText="Employee Number">
+                            <h:outputText value="#{emp.employeeNumber}"/>
+                        </p:column>
+                        <p:column headerText=" First Name">
+                            <h:outputText value="#{emp.firstName}"/>
+                        </p:column>
+                        <p:column headerText=" Last Name">
+                            <h:outputText value="#{emp.lastName}"/>
+                        </p:column>
+                        <p:column headerText="Email Address">
+                            <h:outputText value="#{emp.idNumber}"/>
+                        </p:column>
+                        <p:column headerText="ID Number">
+                            <h:outputText value="#{emp.idNumber}"/>
+                        </p:column>
+                        <p:column headerText="Contact Details">
+                            <h:outputText value="#{emp.contactNumber}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton look="primary" value="Edit" size="xs" icon-size="xs" iconBrand="5.2.0" icon-awesome="fa-pencil" action="#{employeeBean.addOrUpdate(emp)}" update="@form"/>
+                            <p:spacer width="5px"/>
+                            <b:commandButton look="danger" value="Del" size="xs" icon-size="xs" iconBrand="5.2.0" icon-awesome="fa-trash" action="#{employeeBean.delete(emp)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel rendered="#{employeeBean.add}" look="default" collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{employeeBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="6,6" size="md" style-class="ui-fluid"> 
+                        <b:formGroup>
+                            <p:outputLabel value="sid"/>
+                            <b:inputText value="#{employeeBean.entity.sid}" field-size="md" required="true" requiredMessage="Please enter the employee sid"/>
+                        </b:formGroup>  
+                        <b:formGroup>
+                            <p:outputLabel value="Employee Number"/>
+                            <b:inputText value="#{employeeBean.entity.employeeNumber}" field-size="md" required="true" requiredMessage="Please enter the employee number"/>
+                        </b:formGroup>                       
+                        <b:formGroup>
+                            <p:outputLabel value="First Name"/>
+                            <b:inputText value="#{employeeBean.entity.firstName}" field-size="md" required="true" requiredMessage="Please enter the employee's first name"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Last Name"/>
+                            <b:inputText value="#{employeeBean.entity.lastName}" field-size="md" required="true" requiredMessage="Please enter the employee's last name"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Email Address"/>
+                            <b:inputText value="#{employeeBean.entity.emailAddress}" field-size="md" required="true" requiredMessage="Please enter the employee's email address"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="ID Number"/>
+                            <b:inputText value="#{employeeBean.entity.idNumber}" field-size="md" required="true" requiredMessage="Please enter the employee ID Number"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Contact Details"/>
+                            <b:inputText value="#{employeeBean.entity.contactNumber}" field-size="md" required="true" requiredMessage="Please enter the employee's contact details"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="md" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="md" value="Save" look="success" action="#{employeeBean.save(employeeBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="md" value="Cancel" look="danger" action="#{employeeBean.cancel(employeeBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
